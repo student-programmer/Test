@@ -9,19 +9,19 @@ interface AddItemModalProps {
 	parId: string;
 }
 
-
-
 const AddItemModal: React.FC<AddItemModalProps> = observer(
 	({ isOpen, onClose, parId }) => {
 		const fileSystemStore = useMobXStore();
 		const [folderName, setFolderName] = useState('');
-		
-
 
 		const handleAddFolder = () => {
 			fileSystemStore.addFolder(parId, folderName);
+			setFolderName('');
 		};
-
+		const handleAddFile = () => {
+			fileSystemStore.addFile(parId, folderName);
+			setFolderName('');
+		};
 
 		const customStyles = {
 			content: {
@@ -37,7 +37,7 @@ const AddItemModal: React.FC<AddItemModalProps> = observer(
 		const changeFolder = (e: ChangeEvent<HTMLInputElement>) => {
 			setFolderName(e.target.value);
 		};
-		console.log(fileSystemStore.rootFolder)
+		console.log(fileSystemStore.rootFolder);
 
 		return (
 			<Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>
@@ -48,7 +48,7 @@ const AddItemModal: React.FC<AddItemModalProps> = observer(
 					onChange={changeFolder}
 				/>
 				<button onClick={handleAddFolder}>Add Folder</button>
-				{/* <button onClick={addFile}>Add File</button> */}
+				<button onClick={handleAddFile}>Add File</button>
 			</Modal>
 		);
 	}

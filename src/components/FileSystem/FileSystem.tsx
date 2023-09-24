@@ -32,9 +32,14 @@ const FileSystem: React.FC<FileSystem> = ({ element }) => {
 		);
 	} else {
 		return (
-			<div>
-				<FileItem name={element.name} del={modal.openDeleteModal} />
-			</div>
+			<ul>
+				<FileItem
+					name={element.name}
+					del={modal.openDeleteModal}
+					parId={element.id}
+					setId={modal.setParId}
+				/>
+			</ul>
 		);
 	}
 };

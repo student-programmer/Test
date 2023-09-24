@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaFolder, FaPlus, FaTrash } from 'react-icons/fa';
-// import { useModalStore } from '../../context';
 
 interface FolderItem {
 	del: () => void;
@@ -10,21 +9,29 @@ interface FolderItem {
 	setId: (id: string) => void;
 }
 
-const FolderItem: React.FC<FolderItem> = ({ name, del, addFolder, parId, setId}) => {
+const FolderItem: React.FC<FolderItem> = ({
+	name,
+	del,
+	addFolder,
+	parId,
+	setId,
+}) => {
+	const handlerClick = () => {
+		setId(parId);
+		addFolder();
+	};
 
+	const handleDel = () => {
+		del();
+		setId(parId);
+	};
 
-
-	const handlerClick = () => { 
-		setId(parId)
-		addFolder()
-	}
-	
 	return (
 		<li className='folder-item'>
 			<FaFolder />
 			<span>{name}</span>
 			<FaPlus onClick={handlerClick} />
-			<FaTrash onClick={del} />
+			<FaTrash onClick={handleDel} />
 		</li>
 	);
 };

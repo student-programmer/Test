@@ -1,4 +1,3 @@
-// FileSystemStore.ts
 import { makeAutoObservable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -74,7 +73,52 @@ class FileSystemStore {
 
 		return null;
 	}
+
+	deleteFileById(fileId: string) {
+		this.deleteItemById(fileId);
+	}
+
+	deleteFolderById(folderId: string) {
+		this.deleteItemById(folderId);
+	}
+
+		deleteItemById(itemId: string) {
+		const itemToDelete = this.findItemById(itemId);
+		if (!itemToDelete) {
+			console.error(`Item with id ${itemId} not found.`);
+			return;
+		}
+
+		if (itemToDelete.parentId !== null) {
+			const parentItem = this.findItemById(itemToDelete.parentId);
+
+			if (parentItem && 'children' in parentItem) {
+				const children = parentItem.children;
+				const indexToDelete = children.findIndex(child => child.id === itemId);
+
+				if (indexToDelete !== -1) {
+					children.splice(indexToDelete, 1);
+				}
+			} else {
+				console.error(
+					`Parent item with id ${itemToDelete.parentId} not found.`
+				);
+			}
+		} else {
+			const rootIndexToDelete = this.rootFolder.children.findIndex(
+				child => child.id === itemId
+			);
+
+			if (rootIndexToDelete !== -1) {
+				this.rootFolder.children.splice(rootIndexToDelete, 1);
+			}
+		}
+	}
 }
+
+
+
+
 
 
 interface BaseItem {

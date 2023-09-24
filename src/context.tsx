@@ -3,23 +3,25 @@ import AddItemModal from './components/AddModal/AddModal';
 import DeleteItemModal from './components/DeleteModal/DeleteModal';
 import { fileSystemStore } from './store/store';
 
-const ModalContext = createContext<unknown>(null);
+interface ModalContextType {
+	openAddModal: () => void;
+	openDeleteModal: () => void;
+	closeAddModal: () => void;
+	closeDeleteModal: () => void;
+	parId: string;
+	setParId: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
+
 interface ModalProps {
 	children: any;
 }
 
 export const ModalProvider: React.FC<ModalProps> = ({ children }) => {
-
-	
-
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [parId, setParId] = useState(fileSystemStore.rootFolder.id)
-
-
-
-
-
+	const [parId, setParId] = useState(fileSystemStore.rootFolder.id);
 
 	const openAddModal = () => {
 		setIsAddModalOpen(true);
@@ -54,11 +56,19 @@ export const ModalProvider: React.FC<ModalProps> = ({ children }) => {
 				onClose={closeAddModal}
 				parId={parId}
 			/>
-			<DeleteItemModal isOpen={isDeleteModalOpen} onClose={closeDeleteModal} />
+			<DeleteItemModal
+				isOpen={isDeleteModalOpen}
+				onClose={closeDeleteModal}
+				parId={parId}
+			/>
 		</ModalContext.Provider>
 	);
 };
 
 export const useModalStore = () => {
-	return useContext(ModalContext);
+	const context = useContext(ModalContext);
+	if (context === undefined) {
+		throw new Error('useModalStore must be used within a ModalProvider');
+	}
+	return context;
 };
