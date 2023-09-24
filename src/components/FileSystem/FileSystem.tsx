@@ -27,7 +27,7 @@ const FileSystem: React.FC<FileSystem> = ({ element }) => {
 				/>
 
 				{element.children &&
-					element.children.map(child => <FileSystem element={child} />)}
+					element.children.map(child => <FileSystem element={child} key={element.id}/>)}
 			</ul>
 		);
 	} else {

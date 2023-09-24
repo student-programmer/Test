@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import { observer } from 'mobx-react-lite';
 import { useMobXStore } from '../../store/context';
+import d from './DeleteModal.module.css'
+
 interface DeleteItemModalProps {
 	isOpen: boolean;
 	onClose: () => void;
@@ -24,12 +26,16 @@ const DeleteItemModal: React.FC<DeleteItemModalProps> = observer(
 
 		const handleDelete = () => {
 			fileSystemStore.deleteFileById(parId);
+			onClose()
 		};
 
 		return (
 			<Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>
-				<button>No, cancel</button>
-				<button onClick={handleDelete}>Yes</button>
+				<div className={d.delete_block}>
+					{' '}
+					<button onClick={onClose} className={d.no}>No</button>
+					<button onClick={handleDelete}>Yes</button>
+				</div>
 			</Modal>
 		);
 	}

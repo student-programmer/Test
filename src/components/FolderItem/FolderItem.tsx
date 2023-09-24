@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFolder, FaPlus, FaTrash } from 'react-icons/fa';
+import a from './FolderItem.module.css'
 
 interface FolderItem {
 	del: () => void;
@@ -27,7 +28,7 @@ const FolderItem: React.FC<FolderItem> = ({
 	};
 
 	return (
-		<li className='folder-item'>
+		<li className={a.folder_item}>
 			<FaFolder />
 			<span>{name}</span>
 			<FaPlus onClick={handlerClick} />

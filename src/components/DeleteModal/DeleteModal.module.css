@@ -1,0 +1,12 @@
+.delete_block{
+        display: flex;
+    justify-content: space-between;
+    width:200px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+.no{
+    width:63px;
+}

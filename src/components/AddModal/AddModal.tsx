@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import Modal from 'react-modal';
 import { useMobXStore } from '../../store/context';
 import { observer } from 'mobx-react-lite';
+import a from './AddModal.module.css';
 
 interface AddItemModalProps {
 	isOpen: boolean;
@@ -17,10 +18,12 @@ const AddItemModal: React.FC<AddItemModalProps> = observer(
 		const handleAddFolder = () => {
 			fileSystemStore.addFolder(parId, folderName);
 			setFolderName('');
+			onClose()
 		};
 		const handleAddFile = () => {
 			fileSystemStore.addFile(parId, folderName);
 			setFolderName('');
+			onClose()
 		};
 
 		const customStyles = {
@@ -37,7 +40,6 @@ const AddItemModal: React.FC<AddItemModalProps> = observer(
 		const changeFolder = (e: ChangeEvent<HTMLInputElement>) => {
 			setFolderName(e.target.value);
 		};
-		console.log(fileSystemStore.rootFolder);
 
 		return (
 			<Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>
@@ -46,9 +48,17 @@ const AddItemModal: React.FC<AddItemModalProps> = observer(
 					placeholder='Enter sequence name'
 					value={folderName}
 					onChange={changeFolder}
+					className={a.add_input}
 				/>
-				<button onClick={handleAddFolder}>Add Folder</button>
-				<button onClick={handleAddFile}>Add File</button>
+				<div className={a.add_block}>
+					{' '}
+					<button onClick={handleAddFolder} className={a.add_folder}>
+						Add Folder
+					</button>
+					<button onClick={handleAddFile} className={a.add_file}>
+						Add File
+					</button>
+				</div>
 			</Modal>
 		);
 	}

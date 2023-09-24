@@ -1,4 +1,5 @@
 import { FaFile, FaTrash } from 'react-icons/fa';
+import a from './FileItem.module.css'
 
 interface FileItem {
 	del: () => void;
@@ -14,7 +15,7 @@ const FileItem: React.FC<FileItem> = ({ name, del, parId, setId }) => {
 	};
 
 	return (
-		<li className='file-item'>
+		<li className={a.file_item}>
 			<FaFile />
 			<span>{name}</span>
 			<FaTrash onClick={handleDel} />
