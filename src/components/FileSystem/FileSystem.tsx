@@ -1,4 +1,3 @@
-// FileSystem.tsx
 import React from 'react';
 import FolderItem from '../FolderItem/FolderItem';
 import FileItem from '../FileItem/FileItem';
